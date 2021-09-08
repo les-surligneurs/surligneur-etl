@@ -71,9 +71,12 @@ if __name__ == "__main__":
     extr = Extracter()
 
     donnees = extr.get_articles()
+    for data in donnees[5]:
+        print (data)
+
     #logging.info(donnees)
-    for elt in donnees:
+    #for elt in donnees:
         #comm = Commentaire(elt[1],elt[11],elt[10],'')
-        print(elt[1],elt[0])
+        #print(elt[1],elt[0])
         #connexion.insertTuple(comm)
     connexion.closeSession()
