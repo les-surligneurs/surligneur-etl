@@ -4,16 +4,10 @@ import logging
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from model import base
-from model.tag import tag
-from model.source import Source
-from model.auteursource import auteursource
-from model.auteurcommentaire import auteurcommentaire
-from model.commentaire import Commentaire
-from model.associationtables import ecritsource, ecritcommentaire,lienlois,refloicomm
-from model.lienlois import lienlois
-from model.resNLP import resNLP
 
+from model.models import base
+from model.models import auteursource,auteurcommentaire,resNLP,Commentaire,Source,lienlois
+from model.associationtables import ecritsource,ecritcommentaire,refloicomm
 from Extracter import Extracter
 
 # TODO: Déplacer le fichier de logs
@@ -78,5 +72,8 @@ if __name__ == "__main__":
 
     donnees = extr.get_articles()
     #logging.info(donnees)
-    print(donnees)
+    for elt in donnees:
+        #comm = Commentaire(elt[1],elt[11],elt[10],'')
+        print(elt[1],elt[0])
+        #connexion.insertTuple(comm)
     connexion.closeSession()
