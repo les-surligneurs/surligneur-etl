@@ -3,6 +3,7 @@ import logging
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 from model import base
 from model.tag import tag
 from model.source import Source
@@ -12,6 +13,8 @@ from model.commentaire import Commentaire
 from model.associationtables import ecritsource, ecritcommentaire,lienlois,refloicomm
 from model.lienlois import lienlois
 from model.resNLP import resNLP
+
+from Extracter import Extracter
 
 # TODO: Déplacer le fichier de logs
 logging.basicConfig(filename='etl.log', filemode='w',
@@ -71,5 +74,9 @@ if __name__ == "__main__":
     logging.info("%s", conf)
 
     connexion = PGEngine(conf)
+    extr = Extracter()
 
+    donnees = extr.get_articles()
+    #logging.info(donnees)
+    print(donnees)
     connexion.closeSession()

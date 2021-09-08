@@ -13,8 +13,6 @@ class Extracter:
     
     def __init__(self):
         self.url = 'https://lessurligneurs.eu/'
-    
-    
 
     def get_page(self, url):
         response = requests.request('GET', url)
@@ -31,6 +29,7 @@ class Extracter:
 
     def get_articles(self,html_page = ''):
         Extracted_All =[]
+
         all_url = self.get_url(self.url)
         cpt = 0
         for  lien in  all_url :
@@ -200,27 +199,9 @@ class Extracter:
                         Extracted.append (liensverslois)
                         Extracted.append (ArSuggNoRcours)
 
-                        
                         cpt += 1
                         Extracted_All.append(Extracted)
         
         print ("\33[93m" + "nombre d'articles total scraper : " +  str(cpt) +Style.RESET_ALL )
-        return Extracted_All 
-
-
-
-if __name__ == '__main__':
-
-      
-    Scrapper = Extracter ()
-    listes_Articles = Scrapper.get_articles()
-    
-    for a in listes_Articles[6] : 
-        print (a)
-        print ( "\33[93m" +"***************************************************************************************" + Style.RESET_ALL)
-
-    print ("\33[93m" + "la liste contient " + str (len(listes_Articles)) + " articles "+Style.RESET_ALL)
-    
-
-
+        return Extracted_All
 
