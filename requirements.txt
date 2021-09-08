@@ -1,2 +1,6 @@
 SQLAlchemy==1.4.22
 argparse
+psycopg2-binary
+requests
+bs4
+colorama
