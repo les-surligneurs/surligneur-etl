@@ -4,11 +4,13 @@ import datetime
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import select
 
 from model.models import base
 from model.models import auteursource, auteurcommentaire, resNLP, Commentaire, Source, lienlois
 from model.associationtables import ecritsource, ecritcommentaire, refloicomm
 from Extracter import Extracter
+from nlpanalyzer import nlpanalyzer
 
 logging.basicConfig(filename='etl.log', filemode='w',
                     format='%(name)s - %(levelname)s - %(message)s')
@@ -78,6 +80,9 @@ class PGEngine:
         self.Session.merge(obj)
         self.Session.commit()
 
+    def fetchCommentaires(self):
+        return self.Session.execute(select(Commentaire).order_by(Commentaire.titre))
+
     def closeSession(self):
         self.Session.close()
 
@@ -130,6 +135,11 @@ if __name__ == "__main__":
     finally:
         logging.info("Fin de l'importation des données")
 
+    nlp = nlpanalyzer()
+    commentaires = connexion.fetchCommentaires()
+    for comm in commentaires.scalars():
+        res = resNLP(comm.titre, nlp.extractNamefromtitle(comm.titre), nlp.extractPlacefromtitle(comm.titre))
+        connexion.insertTuple(res)
     connexion.closeSession()
 
 
