@@ -44,22 +44,16 @@ class Extracter:
                     child = article
                     Extracted = []
 
-                    if child.find("div", {"class": "texte"} ) != None : 
-            
-                        URL  = lien.get('href')
-                        Extracted.append(URL)
-                        
-                        child = child.parent.parent 
-                        TITRE = str (clear_text (str (child.find('h1')) ))
-                        
-                         
-                                      
-            
-                        Extracted.append(TITRE)
-                
-                        SUBTITRE = clear_text (str (child.h2))
-                        Extracted.append(SUBTITRE)
+                    if child.find("div", {"class": "texte"} ) != None :
 
+                        URL = lien.get('href')
+                        child = child.parent.parent
+                        TITRE = str(clear_text(str(child.find('h1'))))
+                        SUBTITRE = clear_text(str(child.h2))
+                        url_source = child.find("a").get('href')
+                        Extracted.append(url_source)
+                        Extracted.append(TITRE)
+                        Extracted.append(SUBTITRE)
                         tokens =  clear_text (str (child.h2)).split("//")
                         final = []
                         AuteursArticles = []
@@ -193,16 +187,5 @@ class Extracter:
                             Extracted_All.append(Extracted) 
 
                         tr.add (TITRE)
-                        
-                        
-                        
-                        
-
-                        
-                        
-                    
-                        
-                            
-        print("nombre d'articles scrapper :   " + str (len(Extracted_All)))
         return Extracted_All
 

@@ -1,3 +1,5 @@
+import datetime
+
 from model.models import *
 from model.models import base
 
@@ -10,6 +12,12 @@ class ecritsource(base):
     source = relationship(Source, back_populates="srcs")
     auteurs = relationship(auteursource, back_populates="auteursource")
 
+    def __init__(self, auteur:str,url: str,date: datetime.date):
+        self.urlsource = url
+        self.nomauteursource = auteur
+        self.ecritle = date
+
+
 class ecritcommentaire(base):
     __tablename__ = 'ecritcommentaire'
 
@@ -19,6 +27,10 @@ class ecritcommentaire(base):
     comment = relationship(Commentaire, back_populates="commentairea")
     auteurscom = relationship(auteurcommentaire, back_populates="auteurcommentaire")
 
+    def __init__(self, auteur:str, titre:str, date:datetime.date):
+        self.nomauteurcommentaire = auteur
+        self.titrecommentaire = titre
+        self.commenatairedate = date
 
 class refloicomm(base):
     __tablename__ = 'refloicomm'
@@ -28,3 +40,8 @@ class refloicomm(base):
     phrase = Column(String)
     comment = relationship(Commentaire, back_populates="commloi")
     loicomm = relationship(lienlois, back_populates="lienloiscomm")
+
+    def __init__(self, titre:str, url:str, phrase:str):
+        self.titrecomm = titre
+        self.urlloi = url
+        self.phrase = phrase

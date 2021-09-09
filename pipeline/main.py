@@ -1,19 +1,51 @@
 import argparse
 import logging
+import datetime
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-
 from model.models import base
-from model.models import auteursource,auteurcommentaire,resNLP,Commentaire,Source,lienlois
-from model.associationtables import ecritsource,ecritcommentaire,refloicomm
+from model.models import auteursource, auteurcommentaire, resNLP, Commentaire, Source, lienlois
+from model.associationtables import ecritsource, ecritcommentaire, refloicomm
 from Extracter import Extracter
 
-# TODO: Déplacer le fichier de logs
 logging.basicConfig(filename='etl.log', filemode='w',
                     format='%(name)s - %(levelname)s - %(message)s')
 logging.getLogger().setLevel(logging.INFO)
+
+
+def get_date(string: str):
+    dictmois = {
+        "janvier": "-01-",
+        "février": "-02-",
+        "mars": "-03-",
+        "avril": "-04-",
+        "mai": "-05-",
+        "juin": "-06-",
+        "juillet": "-07-",
+        "août": "-08-",
+        "septembre": "-09-",
+        "octobre": "-10-",
+        "novembre": "-11-",
+        "décembre": "-12-"
+    }
+
+    data = string.split(" ")
+    if (len(data) == 3):
+        data.reverse()
+
+        for k, v in dictmois.items():
+            data[1] = str(data[1]).replace(k, v)
+        date = ""
+        for valeur in data:
+            date += str(valeur)
+        date += ", 00:00:00"
+        date = datetime.datetime.strptime(date, '%Y-%m-%d, %H:%M:%S').date()
+    else:
+        datenow = datetime.datetime.today().strftime('%Y-%m-%d, %H:%M:%S')
+        date = datetime.datetime.strptime(datenow,'%Y-%m-%d, %H:%M:%S').date()
+    return date
 
 
 class Config:
@@ -42,9 +74,8 @@ class PGEngine:
         base.metadata.create_all(self.engine)
 
     def insertTuple(self, obj: any):
-        # TODO: Ajouter des logs INFO et ERROR
         logging.info("Insertion du tuple")
-        self.Session.add(obj)
+        self.Session.merge(obj)
         self.Session.commit()
 
     def closeSession(self):
@@ -71,12 +102,35 @@ if __name__ == "__main__":
     extr = Extracter()
 
     donnees = extr.get_articles()
-    for data in donnees[5]:
-        print (data)
+    logging.info(len(donnees))
+    try:
+        for elt in donnees:
+            comm = Commentaire(elt[1], elt[11], elt[10], elt[6])
+            for x, y in list(zip(elt[3], elt[4])):
+                author = auteursource(x, y)
+                connexion.insertTuple(author)
+            src = Source(elt[0], 'nd')
+            for x, y in list(zip(elt[7], elt[8])):
+                auteurcom = auteurcommentaire(x, y)
+                connexion.insertTuple(auteurcom)
+            for lois in elt[13][0::2]:
+                connexion.insertTuple(lienlois(lois))
+            connexion.insertTuple(comm)
+            connexion.insertTuple(src)
+            connexion.insertTuple(ecritsource(author.nom,src.url,get_date(elt[5])))
+            connexion.insertTuple(ecritcommentaire(auteurcom.nom,comm.titre,get_date(elt[9])))
+            if len(elt[13]) > 0:
+                i = 0
+                while i < len(elt[13]):
+                    if i % 2 == 0:
+                        url = elt[13][i]
+                        phrase = elt[13][i+1]
+                        connexion.insertTuple(refloicomm(elt[1],url,phrase))
+                    i = i+2
+    finally:
+        logging.info("Fin de l'importation des données")
 
-    #logging.info(donnees)
-    #for elt in donnees:
-        #comm = Commentaire(elt[1],elt[11],elt[10],'')
-        #print(elt[1],elt[0])
-        #connexion.insertTuple(comm)
     connexion.closeSession()
+
+
+

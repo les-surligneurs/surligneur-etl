@@ -16,6 +16,7 @@ class auteursource(base):
         self.nom = nom
         self.typesource = typesource
 
+
 class Source(base):
     __tablename__ = 'sources'
 
@@ -49,6 +50,7 @@ class Commentaire(base):
         self.tag = tag
         self.resume = resume
 
+
 class auteurcommentaire(base):
     __tablename__ = 'auteurcommentaire'
 
@@ -66,7 +68,8 @@ class lienlois(base):
     __tablename__ = 'lienlois'
 
     url = Column(String, primary_key=True)
-    lienloiscomm = relationship("refloicomm",back_populates="loicomm")
+    lienloiscomm = relationship("refloicomm", back_populates="loicomm")
+
     def __init__(self, url: str):
         self.url = url
 
