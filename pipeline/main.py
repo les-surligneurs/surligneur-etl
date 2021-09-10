@@ -16,7 +16,11 @@ logging.basicConfig(filename='etl.log', filemode='w',
                     format='%(name)s - %(levelname)s - %(message)s')
 logging.getLogger().setLevel(logging.INFO)
 
-
+"""
+    # Permet de passer d'une date littérale à une date numérique
+    # @param string  la date littérale
+    # @return la date numérique
+"""
 def get_date(string: str):
     dictmois = {
         "janvier": "-01-",
@@ -50,6 +54,9 @@ def get_date(string: str):
     return date
 
 
+"""
+    # Class des objets de configuration pour la base de donnée
+"""
 class Config:
     def __init__(self, host: str, port: str, db: str, user: str, pwd: str):
         self.host = host
@@ -62,7 +69,9 @@ class Config:
         return "Host: " + str(self.host) + " -Port: " + str(self.port) + " -Database: " + str(
             self.db) + " -User: " + str(self.user) + " -Password: " + str(self.pwd)
 
-
+"""
+    # Class des objets permettant les intéractions avec la base de données postgresql : Connexion, Insertion...
+"""
 class PGEngine:
     def __init__(self, config: Config):
         self.configuration = config
@@ -87,7 +96,14 @@ class PGEngine:
         self.Session.close()
 
 
+"""
+    # ---------------
+    #   __MAIN__
+    # ---------------
+"""
+
 if __name__ == "__main__":
+    # Permet la configuration de l'application grâce aux paramètres donnés à l'execution
     parser = argparse.ArgumentParser(
         description='Pipeline d\'intégration de données du site les surligneurs')
     parser.add_argument("--host", dest="host",
@@ -100,15 +116,19 @@ if __name__ == "__main__":
     args = parser.parse_args()
     logging.info("%s", args)
 
+    # Initialise l'objet de configuration de la bdd grâce aux précédents parametres
     conf = Config(args.host, args.port, args.db, args.user, args.pwd)
     logging.info("%s", conf)
-
+    # Initialise la connexion avec la base de données avec les informations de l'objet conf
     connexion = PGEngine(conf)
+    # Initialise l'extracteur
     extr = Extracter()
 
+    # Récupération des données grâce à l'extracteur 
     donnees = extr.get_articles()
     logging.info(len(donnees))
     try:
+        # Insertion des données récupérées dans les différentes tables
         for elt in donnees:
             comm = Commentaire(elt[1], elt[11], elt[10], elt[6])
             for x, y in list(zip(elt[3], elt[4])):
@@ -134,9 +154,10 @@ if __name__ == "__main__":
                     i = i+2
     finally:
         logging.info("Fin de l'importation des données")
-
+    # Analyse des données et récupération des données nécessaires 
     nlp = nlpanalyzer()
     commentaires = connexion.fetchCommentaires()
+    # Insertion de ces données
     for comm in commentaires.scalars():
         res = resNLP(comm.titre, nlp.extractNamefromtitle(comm.titre), nlp.extractPlacefromtitle(comm.titre))
         connexion.insertTuple(res)

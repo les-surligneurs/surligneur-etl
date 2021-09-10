@@ -4,8 +4,16 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from colorama import Fore, Back, Style,init
+
+
 init(convert=True)
 
+
+"""
+    # Formatte le code html d'un objet en supprimant ses balises html
+    # @param raw_html code html à formatter
+    # @return le code html sans les balises html
+"""
 def clear_text(raw_html):
   cleanr = re.compile('<.*?>')
   cleantext = re.sub(cleanr, '', raw_html)
@@ -13,12 +21,14 @@ def clear_text(raw_html):
 
 class Extracter:
     """
-    # Constructeur  qui initialise l'url par le site web des surligneurs
+        # Constructeur  qui initialise l'url par le site web des surligneurs
     """
     def __init__(self):
         self.url = 'https://lessurligneurs.eu/'
     """
-    # @return le resulat d'une requete web sous format HTML
+        # Permet de récupérer le contenu d'une page web au format objet HTML interprétable par python
+        # @param  url  lien de la page à récupérer
+        # @return le resulat d'une requete web sous format HTML
     """
     def get_page(self, url):
         response = requests.request('GET', url)
@@ -28,16 +38,19 @@ class Extracter:
         return content
     
     """
-    # @return tout les liens d'une page html 
+        # Permet de récupérer tous les liens contenu dans un objet html
+        # @param html_page objet html sur lequel on cherchera les liens
+        # @return tous les liens d'une page html 
     """
     def get_url(self , html_page):
         soup = BeautifulSoup(self.get_page(html_page), 'lxml')
         return soup.find_all('a')
     
     """
-    # @return  toutes les information conceranant un article sous fromat d"une liste 
+        # Récupére les articles et leurs informations contenus dans un objet html 
+        # @return  toutes les informations concernant un ou plusieurs article(s) sous forme de liste
     """
-    def get_articles(self,html_page = ''):
+    def get_articles(self):
         #liste qui va contenir tout les articles 
         Extracted_All =[]
         #on récupère tout les urls et on les regarde  1 par 1 
