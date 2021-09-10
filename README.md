@@ -1,4 +1,4 @@
-![logo laboratoire david]{https://www.irit.fr/CAIR/images_specific/logos/logo_david.png}
+![logo laboratoire david](https://www.irit.fr/CAIR/images_specific/logos/logo_david.png)
 
 # Pipeline d'intégration de données des Surligneurs
 
