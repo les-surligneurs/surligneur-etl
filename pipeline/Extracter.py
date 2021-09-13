@@ -204,9 +204,11 @@ class Extracter:
                         Extracted.append (ArSuggRcours)
                         Extracted.append (liensverslois)
                         Extracted.append (ArSuggNoRcours)
+                        Extracted.append(URL)
                         
                         # on regarse si larticle  existe dans le set 
                         # si il existe on insere pas 
+
                         if TITRE not in tr :
                             Extracted_All.append(Extracted) 
 

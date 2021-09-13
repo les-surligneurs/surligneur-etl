@@ -130,7 +130,7 @@ if __name__ == "__main__":
     try:
         # Insertion des données récupérées dans les différentes tables
         for elt in donnees:
-            comm = Commentaire(elt[1], elt[11], elt[10], elt[6])
+            comm = Commentaire(elt[1], elt[11], elt[10], elt[6], elt[15])
             for x, y in list(zip(elt[3], elt[4])):
                 author = auteursource(x, y)
                 connexion.insertTuple(author)
