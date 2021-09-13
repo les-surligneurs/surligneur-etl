@@ -3,6 +3,9 @@ import datetime
 from model.models import *
 from model.models import base
 
+"""
+    # Class de la table 'ecritsource' et des ses informations
+"""
 class ecritsource(base):
     __tablename__ = 'ecritsource'
 
@@ -17,7 +20,9 @@ class ecritsource(base):
         self.nomauteursource = auteur
         self.ecritle = date
 
-
+"""
+    # Class de la table 'ecritcommentaire' et des ses informations
+"""
 class ecritcommentaire(base):
     __tablename__ = 'ecritcommentaire'
 
@@ -32,6 +37,10 @@ class ecritcommentaire(base):
         self.titrecommentaire = titre
         self.commenatairedate = date
 
+
+"""
+    # Class de la table 'refloicomm' et des ses informations
+"""
 class refloicomm(base):
     __tablename__ = 'refloicomm'
 

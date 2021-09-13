@@ -1,3 +1,15 @@
-# Pipeline d'intégration de données des Surligneurs
+![logo laboratoire david](https://www.irit.fr/CAIR/images_specific/logos/logo_david.png)
 
-Ce projet à pour objectif d'automatiser l'intégration des données depuis le site [les-surligneurs](les-surlligneurs.eu) vers une base de donnée en vue d'un traitement des dinnées.
+# ETL les Surligneurs
+
+## Introduction :blue_book:
+---
+
+Ce projet à pour objectif d'automatiser l'intégration des données depuis le site [les-surligneurs](les-surlligneurs.eu) au sein d'une même base de données afin de pouvoir analyser et exploiter les différentes informations qu'elles contiennent.
+
+## Extraction :package:
+---
+
+
+## Insertion :inbox_tray:
+---

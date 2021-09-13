@@ -10,6 +10,9 @@ nltk.download('punkt')
 french_stopwords = set(stopwords.words('french'))
 
 
+"""
+# 
+"""
 class nlpanalyzer:
 
     def __init__(self):
@@ -19,7 +22,6 @@ class nlpanalyzer:
         # @param titre la chaîne de caractère a analyser en l'occurence le titre
         # @return string le prénom et nom dans le titre ou Aucun sinon
     """
-
     def extractNamefromtitle(self,titre: str):
         french_stopwords = set(stopwords.words('french'))
         token = word_tokenize(titre, language="french")
@@ -41,7 +43,6 @@ class nlpanalyzer:
         # @param titre la chaîne de caractère a analyser en l'occurence le titre
         # @return string Le lieu trouvé dans le titre ou Aucun sinon
     """
-
     def extractPlacefromtitle(self, titre: str) -> str:
         french_stopwords = set(stopwords.words('french'))
         token = word_tokenize(titre, language="french")

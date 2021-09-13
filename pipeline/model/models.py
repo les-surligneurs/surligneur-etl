@@ -4,7 +4,9 @@ from sqlalchemy.ext.declarative import declarative_base
 
 base = declarative_base()
 
-
+"""
+    # Class de la table 'auteursource' et des ses informations
+"""
 class auteursource(base):
     __tablename__ = 'auteursource'
 
@@ -16,7 +18,9 @@ class auteursource(base):
         self.nom = nom
         self.typesource = typesource
 
-
+"""
+    # Class de la table 'source' et des ses informations
+"""
 class Source(base):
     __tablename__ = 'sources'
 
@@ -29,7 +33,9 @@ class Source(base):
         self.url = url
         self.nature = nature
 
-
+"""
+    # Class de la table 'commentaire' et des ses informations
+"""
 class Commentaire(base):
     __tablename__ = 'commentaire'
 
@@ -51,7 +57,9 @@ class Commentaire(base):
         self.resume = resume
         self.url = url
 
-
+"""
+    # Class de la table 'auteurcommentaire' et des ses informations
+"""
 class auteurcommentaire(base):
     __tablename__ = 'auteurcommentaire'
 
@@ -64,7 +72,9 @@ class auteurcommentaire(base):
         self.nom = nom
         self.profession = profession
 
-
+"""
+    # Class de la table 'lienlois' et des ses informations
+"""
 class lienlois(base):
     __tablename__ = 'lienlois'
 
@@ -74,7 +84,9 @@ class lienlois(base):
     def __init__(self, url: str):
         self.url = url
 
-
+"""
+    # Class de la table 'resNLP' et des ses informations
+"""
 class resNLP(base):
     __tablename__ = 'resNLP'
 
