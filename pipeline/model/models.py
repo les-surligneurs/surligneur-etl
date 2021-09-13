@@ -37,18 +37,19 @@ class Commentaire(base):
     corps = Column(String)
     resume = Column(String)
     tag = Column(String)
-
+    url = Column(String)
     commentairea = relationship("ecritcommentaire", back_populates="comment")
     commloi = relationship("refloicomm", back_populates="comment")
 
     source_url = Column(String, ForeignKey('sources.url'), unique=True)
     source = relationship("Source", backref=backref("commentaire", uselist=False))
 
-    def __init__(self, title: str, corps: str, resume: str, tag: str):
+    def __init__(self, title: str, corps: str, resume: str, tag: str, url:str):
         self.titre = title
         self.corps = corps
         self.tag = tag
         self.resume = resume
+        self.url = url
 
 
 class auteurcommentaire(base):

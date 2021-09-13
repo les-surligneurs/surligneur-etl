@@ -182,7 +182,7 @@ class Extracter:
                         Extracted.append (ArSuggRcours)
                         Extracted.append (liensverslois)
                         Extracted.append (ArSuggNoRcours)
-                        
+                        Extracted.append(URL)
                         if TITRE not in tr :
                             Extracted_All.append(Extracted) 
 
