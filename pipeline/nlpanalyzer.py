@@ -33,9 +33,9 @@ class nlpanalyzer:
             if re.search("exact", str(data)):
                 resultat = data
                 break
-            dictionaire = {"exact": "", "/JJR": "", "/NNP": "", ")": "", "(": "", "/JJ": ""}
-            for k, v in dictionaire.items():
-                resultat = str(resultat).replace(k, v)
+        dictionaire = {"exact": "", "/JJR": "", "/NNP": "", ")": "", "(": "", "/JJ": ""}
+        for k, v in dictionaire.items():
+            resultat = str(resultat).replace(k, v)
         return resultat
 
     """
@@ -54,7 +54,7 @@ class nlpanalyzer:
             if re.search(r'exact [A-ZÀ-Ö][A-Za-zÀ-ÖØ-öø-ÿ-]+', str(data)):
                 resultat = data
                 break
-            dictionaire = {"exact": "", "/NN": ""}
-            for k, v in dictionaire.items():
-                resultat = str(resultat).replace(k, v)
+        dictionaire = {"exact": "", "/NN": ""}
+        for k, v in dictionaire.items():
+            resultat = str(resultat).replace(k, v)
         return resultat
