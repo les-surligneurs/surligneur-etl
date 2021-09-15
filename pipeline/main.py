@@ -155,12 +155,12 @@ if __name__ == "__main__":
     finally:
         logging.info("Fin de l'importation des données")
     # Analyse des données et récupération des données nécessaires 
-    nlp = nlpanalyzer()
-    commentaires = connexion.fetchCommentaires()
+    #nlp = nlpanalyzer()
+    #commentaires = connexion.fetchCommentaires()
     # Insertion de ces données
-    for comm in commentaires.scalars():
-        res = resNLP(comm.titre, nlp.extractNamefromtitle(comm.titre), nlp.extractPlacefromtitle(comm.titre))
-        connexion.insertTuple(res)
+    #for comm in commentaires.scalars():
+        #res = resNLP(comm.titre, nlp.extractNamefromtitle(comm.titre), nlp.extractPlacefromtitle(comm.titre))
+        #connexion.insertTuple(res)
     connexion.closeSession()
 
 

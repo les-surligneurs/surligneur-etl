@@ -88,16 +88,14 @@ class lienlois(base):
     # Class de la table 'resNLP' et des ses informations
 """
 class resNLP(base):
-    __tablename__ = 'resNLP'
+    __tablename__ = 'resnlp'
 
     titrecomm = Column(String, primary_key=True)
-    personalite = Column(String)
-    lieu = Column(String)
+    namedentities = Column(String)
 
     titre_str = Column(String, ForeignKey('commentaire.titre'), unique=True)
     titre = relationship("Commentaire", backref=backref("commentaire", uselist=False))
 
-    def __init__(self, titre: str, personlite: str = '', lieu: str = ''):
+    def __init__(self, titre: str, entites: str = ''):
         self.titrecomm = titre
-        self.personalite = personlite
-        self.lieu = lieu
+        self.namedentities = entites
