@@ -91,6 +91,8 @@ class resNLP(base):
     __tablename__ = 'resnlp'
 
     titrecomm = Column(String, primary_key=True)
+    personalite = Column(String)
+    lieu = Column(String)
     namedentities = Column(String)
 
     titre_str = Column(String, ForeignKey('commentaire.titre'), unique=True)
